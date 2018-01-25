@@ -1,6 +1,6 @@
 # Machine Learning Engineer Nanodegree
 ## Capstone Proposal
-Joe Udacity  
+Apik Zorian
 December 31st, 2050
 
 ## Proposal
