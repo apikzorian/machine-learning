@@ -1,7 +1,8 @@
 # Machine Learning Engineer Nanodegree
-## Capstone Proposal
-Joe Udacity  
-December 31st, 2050
+
+## Kaggle Airbnb New User Predictor
+Apik Zorian
+January 25, 2018
 
 ## Proposal
 _(approx. 2-3 pages)_
@@ -29,7 +30,19 @@ In this section, clearly describe a solution to the problem. The solution should
 ### Benchmark Model
 _(approximately 1-2 paragraphs)_
 
-In this section, provide the details for a benchmark model or result that relates to the domain, problem statement, and intended solution. Ideally, the benchmark model or result contextualizes existing methods or known information in the domain and problem given, which could then be objectively compared to the solution. Describe how the benchmark model or result is measurable (can be measured by some metric and clearly observed) with thorough detail.
+Kaggle assesses submissions based on Normalized discounted cumulative gain (NDCG). NDCG is calculated as:
+
+
+
+where reli is the relevance of the result at position i. We will be making a maximum of 5 predictions per booking (k = 5). 
+
+For example, if for a particular user the destination is FR, then the predictions become:
+
+![alt text](https://image.ibb.co/dc1btb/Capture.jpg)
+![alt text](https://image.ibb.co/bBNhYb/NDCG1.jpg)
+
+
+
 
 ### Evaluation Metrics
 _(approx. 1-2 paragraphs)_
