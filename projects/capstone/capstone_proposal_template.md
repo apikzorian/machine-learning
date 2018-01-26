@@ -2,6 +2,7 @@
 
 ## Kaggle Airbnb New User Predictor
 Apik Zorian
+
 January 25, 2018
 
 ## Proposal
