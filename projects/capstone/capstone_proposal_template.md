@@ -9,7 +9,7 @@ January 25, 2018
 
 ### Domain Background
 
-Airbnb is an online peer-to-peer property rental service that allows users to book short-term lodging. This includes rooms, apartments, entire homes, vacation rentals, etc. Airbnb brokers reservations between users and landlords for lodging all over the world. As of January 2018, the company had over 3 million listings in 65,000 cities over 191 countries. 
+Airbnb is an online peer-to-peer property rental service that allows users to book short-term lodging. This includes rooms, apartments, entire homes, vacation rentals, etc. Airbnb brokers reservations between users and landlords for lodging all over the world. As of January 2018, the company had over 3 million listings in 65,000 cities over 191 countries ( [reference](https://www.airbnb.com/about/about-us) ). 
 
 One way to immediately pique a new user's intrest is to cater to advertise bookings in a city or country the user would first like to visit. By accurately predicting where a new user will book his or her first trip, Airbnb can curate personalized content to send to the user. For Airbnb, this helps decrease the average time to first booking for a new user and personalize content with their community. It also improves the new user's first booking experience by curating content to their travel preferences. 
 
