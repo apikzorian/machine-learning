@@ -5,10 +5,8 @@ Apik Zorian
 January 25, 2018
 
 ## Proposal
-_(approx. 2-3 pages)_
 
 ### Domain Background
-_(approx. 1-2 paragraphs)_
 
 Airbnb is an online peer-to-peer property rental service that allows users to book short-term lodging. This includes rooms, apartments, entire homes, vacation rentals, etc. Airbnb brokers reservations between users and landlords for lodging all over the world. As of January 2018, the company had over 3 million listings in 65,000 cities over 191 countries. 
 
@@ -16,19 +14,21 @@ One way to immediately pique a new user's intrest is to cater to advertise booki
 
 
 ### Problem Statement
-_(approx. 1 paragraph)_
 The challenge then becomes: How can Airbnb predict the country in which a new user will make his or her first booking?
 
 In this project, we will predict a new user's first booking by deploying machine learning algorithms to analyze data about the user that will help predict this first booking. Airbnb has posted this very problem as a Kaggle Recruitment Challenge and has provided New User Booking Data to help participants develop models to predict the new user's first booking. This data includes information about the users, including demographis, web session records, and some summary statistics. 
 
 Our goal is to analyze the data, remove irrelevant features or combine features that can be used together, build and train a model, and predict a new user's first booking. 
 
-In this section, clearly describe the problem that is to be solved. The problem described should be well defined and should have at least one relevant potential solution. Additionally, describe the problem thoroughly such that it is clear that the problem is quantifiable (the problem can be expressed in mathematical or logical terms) , measurable (the problem can be measured by some metric and clearly observed), and replicable (the problem can be reproduced and occurs more than once).
-
 ### Datasets and Inputs
-_(approx. 2-3 paragraphs)_
 
-The dataset
+The dataset provided by Airbnb includes 5 .csv files:
+
+* train_users.csv - the training set of users
+* test_users.csv - the test set of users
+* sessions.csv - web sessions log for users
+* countries.csv - summary statistics of destination countries in this dataset and their locations
+* age_gender_bkts.csv - summary statistics of users' age group, gender, country of destination
 
 In this section, the dataset(s) and/or input(s) being considered for the project should be thoroughly described, such as how they relate to the problem and why they should be used. Information such as how the dataset or input is (was) obtained, and the characteristics of the dataset or input, should be included with relevant references and citations as necessary It should be clear how the dataset(s) or input(s) will be used in the project and whether their use is appropriate given the context of the problem.
 
@@ -39,6 +39,8 @@ In this section, clearly describe a solution to the problem. The solution should
 
 ### Benchmark Model
 _(approximately 1-2 paragraphs)_
+
+There are 12 possible outcomes of the destination country: 'US', 'FR', 'CA', 'GB', 'ES', 'IT', 'PT', 'NL','DE', 'AU', 'NDF' (no destination found), and 'other'.  
 
 To determine our benchmark, we will attempt to predict the top 5 most common results. We will train our model on the provided training set, test the model on our testing set, and try to predict the 5 most common outcomes. 
 
@@ -57,18 +59,19 @@ If, for example, the destination for a particular user is France (FR), then the 
 
 ![alt text](https://image.ibb.co/bBNhYb/NDCG1.jpg)
 
-As this is the evaluation metric that Kaggle uses, this will be our metric as well
+As this is the evaluation metric that Kaggle uses, this will be our metric as well.
+
 ### Project Design
-_(approx. 1 page)_
 
-In this final section, summarize a theoretical workflow for approaching a solution given the problem. Provide thorough discussion for what strategies you may consider employing, what analysis of the data might be required before being used, or which algorithms will be considered for your implementation. The workflow and discussion that you provide should align with the qualities of the previous sections. Additionally, you are encouraged to include small visualizations, pseudocode, or diagrams to aid in describing the project design, but it is not required. The discussion should clearly outline your intended workflow of the capstone project.
+Our project will be composed of three steps:
 
------------
-
-**Before submitting your proposal, ask yourself. . .**
-
-- Does the proposal you have written follow a well-organized structure similar to that of the project template?
-- Is each section (particularly **Solution Statement** and **Project Design**) written in a clear, concise and specific fashion? Are there any ambiguous terms or phrases that need clarification?
-- Would the intended audience of your project be able to understand your proposal?
-- Have you properly proofread your proposal to assure there are minimal grammatical and spelling mistakes?
-- Are all the resources used for this project correctly cited and referenced?
+  1. Data Exploration: Along with visualizing our dataset, this step will include using feature manipulation techniques, such as:    
+    * Detecting and removing irrelavant features
+    * Utilizing clustering to create new features    
+    * Detecting outliers
+    * Evaluating outliers significance
+    * Removing null values
+    
+  2. Training and evaluating model: In this step, we will consider various supervised Machine Learning models and use cross validation    to determine which will be best suited for our task. We will also utilize Gridsearch to optimize our parameters
+  
+  3. Testing model: We will utilize our testing set to test our trained model, submit to Kaggle.
