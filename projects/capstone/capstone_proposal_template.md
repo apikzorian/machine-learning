@@ -24,7 +24,7 @@ Our goal is to analyze the data, remove irrelevant features or combine features 
 
 The dataset provided by Airbnb includes 5 .csv files:
 
-1 & 2. [train_users.csv](https://www.kaggle.com/c/airbnb-recruiting-new-user-bookings/download/train_users_2.csv.zip) & [test_users.csv](https://www.kaggle.com/c/airbnb-recruiting-new-user-bookings/download/test_users.csv.zip) - These datasets be used to train our Machine Learning model and eventually test how well it can predict the new user's first booking. For each user, we are provided the following features:
+1 & 2. [train_users.csv](https://www.kaggle.com/c/airbnb-recruiting-new-user-bookings/download/train_users_2.csv.zip) & [test_users.csv](https://www.kaggle.com/c/airbnb-recruiting-new-user-bookings/download/test_users.csv.zip) - These datasets will be used to train/test our model. For each user, we are provided the following features:
   * id: user id
   * date_account_created: the date of account creation
   * timestamp_first_active: timestamp of the first activity, note that it can be earlier than date_account_created or date_first_booking because a user can search before signing up
@@ -42,32 +42,51 @@ The dataset provided by Airbnb includes 5 .csv files:
   * first_browser
   * country_destination: this is the target variable you are to predict
 
-3. [sessions.csv](https://www.kaggle.com/c/airbnb-recruiting-new-user-bookings/download/sessions.csv.zip) - This file contains information on the user's web sessions. Features included in this file contain:
+  The final feture is our traget feature and is not provided in the testing dataset. These features will be used to train our Machine Learning model and eventually test how well it can predict the new user's first booking
+
+3. [sessions.csv](https://www.kaggle.com/c/airbnb-recruiting-new-user-bookings/download/sessions.csv.zip) - This file contains information on the user's web sessions.  Features included in this file contain:
   * user_id: to be joined with the column 'id' in users table
   * action
   * action_type
   * action_detail
   * device_type
   * secs_elapsed
-4. [countries.csv](https://www.kaggle.com/c/airbnb-recruiting-new-user-bookings/download/countries.csv.zip) - Summary statistics of destination countries in this dataset and their locations
-5. [age_gender_bkts.csv](https://www.kaggle.com/c/airbnb-recruiting-new-user-bookings/download/age_gender_bkts.csv.zip) - Summary statistics of users' age group, gender, country of destination
+  
+  This information can be used to provide meaningful insight on the user that may help us predict his or her first booking. For example, we could see the different types of actions a user took, if he/she began planning a trip, how long he/she spent deciding on an action (secs elapsed), etc. This information could be used to help predict where the user would want to travel first, as well as things about the trip that are important to the user, which Airbnb could leverage in their first attempt at customizing the trip for the user.
+  
+  
+4. [countries.csv](https://www.kaggle.com/c/airbnb-recruiting-new-user-bookings/download/countries.csv.zip) - Summary statistics of destination countries in this dataset and their locations. This includes:
+  * country name
+  * latitude and longitutde
+  * distance from U.S. (km2)
+  * language and language levenshtein distance (how close words in the language are to words in english language)
 
-You can access the dataset [here](https://www.kaggle.com/c/airbnb-recruiting-new-user-bookings/data)
+This information can be used to help determine if the country would interest the user based in its distance from the U.S. and whether or not the user would feel comfortable given the spoken language of that country. For example, the user may speak the main language spoken in that country, or the distance is not far enough from the U.S. to where the user would be discouraged from booking a trip.
 
-In this section, the dataset(s) and/or input(s) being considered for the project should be thoroughly described, such as how they relate to the problem and why they should be used. Information such as how the dataset or input is (was) obtained, and the characteristics of the dataset or input, should be included with relevant references and citations as necessary It should be clear how the dataset(s) or input(s) will be used in the project and whether their use is appropriate given the context of the problem.
+
+5. [age_gender_bkts.csv](https://www.kaggle.com/c/airbnb-recruiting-new-user-bookings/download/age_gender_bkts.csv.zip) - Summary statistics of users' age group, gender, country of destination. This dataset includes the following columns:
+ * age_bucket
+ * country_destination
+ * gender
+ * population_in_thousands
+ * year
+ 
+ This information can be used to help understand what types of other users have chosen select countries. For example, we can see what age range of men booked trips to France in 2015 and compare this to the user's age and gender. This information would help determine whether or not the user would want to book a trip to this destination.
+
+
 
 ### Solution Statement
-_(approx. 1 paragraph)_
 
-In this section, clearly describe a solution to the problem. The solution should be applicable to the project domain and appropriate for the dataset(s) or input(s) given. Additionally, describe the solution thoroughly such that it is clear that the solution is quantifiable (the solution can be expressed in mathematical or logical terms) , measurable (the solution can be measured by some metric and clearly observed), and replicable (the solution can be reproduced and occurs more than once).
+We believe that features in training dataset can be leveraged to come up with a model that can accurately predict where a new user's first destination will be. We understand that information about past users, including their actions, characteristics, demographics, and personal information, can be used to develop a machine learning model to predict where a new user with similar traits would decide to travel. 
+
+We will begin with the 15 features included in the `training_set` as the inputs for the model, and the `country_destination` feature as the label. Along the way, we may find some features less useful than others, while some features combined may help simplify our model. These will be explored more as we test our model's capabilities and determine the pros and cons of using different models.We will be sure to test out a variety of supervised-learning models, including SVM, Decision Trees, and Random Forest. We will also use ensemble learning techniques such as Gradient Tree Boosting and XGBoost, as well as parameter tuning using Gridsearch.
 
 ### Benchmark Model
 There are 12 possible outcomes of the destination country: 'US', 'FR', 'CA', 'GB', 'ES', 'IT', 'PT', 'NL','DE', 'AU', 'NDF' (no destination found), and 'other'.  
 
-To determine our benchmark, we will attempt to predict the top 5 most common results. We will train our model on the provided training set, test the model on our testing set, and try to predict the 5 most common outcomes. 
+To determine our benchmark, we will attempt to predict the top 5 most common results. We will train our model on the provided training set, test the model on our testing set, and try to predict the 5 most common outcomes. We will also submit our result to Kaggle with the goal of ranking in the top 30% of the leaderboard.
 
 ### Evaluation Metrics
-_(approx. 1-2 paragraphs)_
 
 Kaggle assesses submissions based on Normalized discounted cumulative gain (NDCG). NDCG is calculated as:
 
