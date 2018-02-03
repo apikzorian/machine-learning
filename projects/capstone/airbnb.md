@@ -115,13 +115,13 @@ As NDCG is the [evaluation metric that Kaggle uses](https://www.kaggle.com/c/air
 
 Our project will be composed of three steps:
 
-    1. Data Exploration: Along with visualizing our dataset, this step will include using feature manipulation techniques, such as:    
+1. Data Exploration: Along with visualizing our dataset, this step will include using feature manipulation techniques, such as:    
     * Removing irrelevant features - We will identify features in the training data that we think would not be relevant, drop them, and a decision tree regressor to see if the prediction drastically changes with or without this feature. 
     * One-hot-encoding categorical features to be combined with numerical features
     * Feature generating - We will create our own features by grouping different features together that may be relevant to each other. This will help reduce the number of total features and hopefully will lead to better predictions. We will use visualize this data using scatter plots to see if any pairs of features exhibit some degree of correlation.
     * Detecting and removing outliers - Using [Tukey's Method](http://datapigtechnologies.com/blog/index.php/highlighting-outliers-in-your-data-with-the-tukey-method/) for identifying outliers, we will collect outliers and later test our model on a training dataset with and without outliers to see how removing the affects prediction.
     * Removing null values - We will remove null values in user data that may skew our predictions
 
-    2. Training and evaluating model: In this step, we will consider various supervised Machine Learning models. Our end goal is to prove that XGBoost will yield the best results, so we will evaluate results from traditional supervised learning models, such as SVM and Decision Trees, and then develop an ensemble learning model using XGBoost and compare the differences. We will use cross validation  to determine which will be best suited for our task. We will also utilize Gridsearch to optimize our parameters. 
+2. Training and evaluating model: In this step, we will consider various supervised Machine Learning models. Our end goal is to prove that XGBoost will yield the best results, so we will evaluate results from traditional supervised learning models, such as SVM and Decision Trees, and then develop an ensemble learning model using XGBoost and compare the differences. We will use cross validation  to determine which will be best suited for our task. We will also utilize Gridsearch to optimize our parameters. 
 
-    3. Testing model: We will utilize our testing set to test our trained model, submit to Kaggle.
+3. Testing model: We will utilize our testing set to test our trained model, submit to Kaggle.
