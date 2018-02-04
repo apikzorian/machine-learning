@@ -1,0 +1,198 @@
+# Machine Learning Engineer Nanodegree
+
+## Kaggle Airbnb New User Predictor
+Apik Zorian
+
+January 25, 2018
+
+## Proposal
+
+### Domain Background
+
+Airbnb is an online peer-to-peer property rental service that allows users to book short-term lodging. This includes rooms, apartments, entire homes, vacation rentals, etc. Airbnb brokers reservations between users and landlords for lodging all over the world. As of January 2018, the company had over 3 million listings in 65,000 cities over 191 countries ( [reference](https://www.airbnb.com/about/about-us) ). 
+
+One way to immediately pique a new user's intrest is to advertise bookings in a city or country the user would first like to visit. By accurately predicting where a new user will book his or her first trip, Airbnb can curate personalized content to showcase that will result in the user completing their booking. For Airbnb, this helps decrease the average time for first booking for a new user and helps personalize content for their community. It also improves the new user's first booking experience by curating content to their travel preferences. 
+
+### Problem Statement
+The challenge then becomes: How can Airbnb predict the country in which a new user will make his or her first booking?
+
+In this project, we will predict a new user's first booking by deploying machine learning algorithms to analyze data about the user that will help predict this first booking. Airbnb has posted this very problem as a [Kaggle Recruitment Challenge](https://www.kaggle.com/c/airbnb-recruiting-new-user-bookings#description) and has provided New User Booking Data to help participants develop models to predict a new user's first booking. This data includes information about users demographics, web session records, and summary statistics. 
+
+Our goal is to analyze the data, build and train a model, and test this model to predict a new user's first booking. 
+
+### Datasets and Inputs
+
+The dataset provided by Airbnb includes 5 .csv files:
+
+1. [train_users.csv](https://www.kaggle.com/c/airbnb-recruiting-new-user-bookings/download/train_users_2.csv.zip)
+
+2. [test_users.csv](https://www.kaggle.com/c/airbnb-recruiting-new-user-bookings/download/test_users.csv.zip)
+
+  
+    These datasets will be used to train and test our model, respectively. For each use in the dataset, we are provided the following features:
+  
+  * id: user id
+  * date_account_created: the date of account creation
+  * timestamp_first_active: timestamp of the first activity, note that it can be earlier than date_account_created or date_first_booking because a user can search before signing up
+  * date_first_booking: date of first booking
+  * gender
+  * age
+  * signup_method
+  * signup_flow: the page a user came to signup up from
+  * language: international language preference
+  * affiliate_channel: what kind of paid marketing
+  * affiliate_provider: where the marketing is e.g. google, craigslist, other
+  * first_affiliate_tracked: whats the first marketing the user interacted with before the signing up
+  * signup_app
+  * first_device_type
+  * first_browser
+  * country_destination: this is the target variable you are to predict
+
+    The final feature is our traget feature and is not provided in the testing dataset. These features will be used to train our Machine Learning model and eventually test how well it can predict the new user's first booking
+
+3. [sessions.csv](https://www.kaggle.com/c/airbnb-recruiting-new-user-bookings/download/sessions.csv.zip) - This file contains information on the user's web sessions.  Features included in this file contain:
+  * user_id: to be joined with the column 'id' in users table
+  * action
+  * action_type
+  * action_detail
+  * device_type
+  * secs_elapsed
+  
+    This information can be used to provide meaningful insight on the user that may help us predict his or her first booking. For example, we could see the different types of actions a user took, if he/she began planning a trip, how long he/she spent deciding on an action (secs elapsed), etc. This information could be used to help predict where the user would want to travel first, as well as things about the trip that are important to the user, which Airbnb could leverage in their first attempt at customizing the trip for the user.
+  
+  
+4. [countries.csv](https://www.kaggle.com/c/airbnb-recruiting-new-user-bookings/download/countries.csv.zip) - Summary statistics of destination countries in this dataset and their locations. This includes:
+  * country name
+  * latitude and longitutde
+  * distance from U.S. (km2)
+  * language and language levenshtein distance (how close words in the language are to words in english language)
+
+    This information can be used to help determine if the country would interest the user based in its distance from the U.S. and whether or not the user would feel comfortable given the spoken language of that country. For example, the user may speak the main language spoken in that country, or the distance is not far enough from the U.S. to where the user would be discouraged from booking a trip.
+
+
+5. [age_gender_bkts.csv](https://www.kaggle.com/c/airbnb-recruiting-new-user-bookings/download/age_gender_bkts.csv.zip) - Summary statistics of users' age group, gender, country of destination. This dataset includes the following columns:
+ * age_bucket
+ * country_destination
+ * gender
+ * population_in_thousands
+ * year
+  
+    This information can be used to help understand what types of other users have chosen select countries. For example, we can see what age range of men booked trips to France in 2015 and compare this to the user's age and gender. This information would help determine whether or not the user would want to book a trip to this destination.
+
+### Evaluation Metrics
+
+Kaggle assesses submissions based on Normalized discounted cumulative gain (NDCG). NDCG is calculated as:
+
+![alt text](https://image.ibb.co/bBNhYb/NDCG1.jpg)
+
+where reli is the relevance of the result at position i. We will be making a maximum of 5 predictions per booking (k = 5). 
+
+For each new user, we make a maximum of 5 predictions on the country of the first booking. The ground truth country is marked with relevance = 1, while the rest have relevance = 0.
+
+If, for example, the destination for a particular user is France (FR), then the predictions become:
+
+![alt text](https://image.ibb.co/dc1btb/Capture.jpg)
+
+As NDCG is the [evaluation metric that Kaggle uses](https://www.kaggle.com/c/airbnb-recruiting-new-user-bookings#evaluation), to assess participants for their competition, this will be our metric as well.
+
+### Project Design
+
+Our project will be composed of three steps:
+
+  1. Data Exploration: Along with visualizing our dataset, this step will include using feature manipulation techniques, such as:    
+    * Detecting and removing irrelavant features
+    * Utilizing clustering to create new features    
+    * Detecting outliers
+    * Evaluating outliers significance
+    * Removing null values
+    
+  2. Training and evaluating model: In this step, we will consider various supervised Machine Learning models and use cross validation    to determine which will be best suited for our task. We will also utilize Gridsearch to optimize our parameters
+
+  3. Testing model: We will utilize our testing set to test our trained model, submit to Kaggle.
+
+
+## Analysis
+
+### Data Exploration
+
+Our training data file consists of 213451 users with 15 features for each user. These features include their gender, age, the date their account was created, sign up method, and other information. Our goal was first to clean up the data by removing data that may obstruct our analysis and combining features that may be able to generate relevant to each other. 
+
+The first step was to identify the missing data. 
+
+<Display missing data>
+
+We were surprised to see that 100% and 67.7% of the `date_first_booking` feature were missing from the testing and training sets, respectively, as well as almost half of the age feature from each set. We decided to first target these two features in our cleanup. 
+
+
+We started first by visulaizing the age feature
+
+<Display original age graph>
+
+While taking a cursory look at the data, we had noticed that while signing up, users had often neglected to input their correct birthday (some users were aged 2000+), some had negative age numbers, while some may have not put in an age at all. For this reason, we decided to set any users age that was less than 15 and greater than 100 to NaN. 
+
+<Display adjusted age graph>
+
+Next, we removed the `date_first_booking` feature from both data sets. Since it did not exist in the testing set, keeping it in our training set would only reduce the accuracy of our model.
+
+### Feature Creation and One-Hot Encoding 
+
+
+We wanted to generate new features to better help us make predictions with our model. One way was to generalize features we already had, starting with age. 
+
+
+#### Feature Creation - Age
+
+We created age intervals, where each 5-year interval from 0 to 100 was a separate grouping. We grouped the users into different age intervals based on the 5-year intervals, one hot encoded the results, and added it back into our dataset. Since we had 5-year intervals from 0 to 100, we have added 20 new columns to our dataset, and after removing the `data_first_booking` feature, we were now at 
+
+
+#### Feature Creation - Date account created
+
+One feature that had potential of being helpful but needed to be modified was the `date_account_created` feature. The year, month, and date of each user's sign up for their account were lumped together in this feature, with hyphens separating them, as follows:
+
+`2010-06-28`
+
+
+We decided that we could benefit from understanding the day of the week that the user created their account, so we created a one-hot-encoded weekday feature, with 7 new columns added to our dataset, one for each day of the week. We also added a "week number" feature, which stores the week number in the year when the user created the account. Rather than one-hot encoding this feature (52 weeks in a year, which would have required 52 columns), we instead stored the numerical value of the week of the year for each user. Thus,we added 8 new columns to the data: one for each day of the week (`dac_w_#`) and one for the week number (`dac_wn`)
+
+
+#### Feature Creation - Timestamp
+
+Similarly to our method in the `data_account_created` feature, we also simplified the `timestamp_first_active` feature in our data set. This was a bit more complex, since the feature was input as the numerical combination of the year-month-day-hour-minute-second that the user was first active. After splitting the single value based on the index of the numbers within the value, we took just the date, created a weekday feature (`tstamp_weekday_#`) which we one hot encoded and added the features for each user. We also created a weekday number feature for the timestamp (`tstamp_week`), similar to what we did for the `date_account_created` feature. Thus, we added 8 new columns, one for each day of the week, and a week number columns as well for the timestamp.
+
+#### Additional One-hot Encoding
+
+Finally, we applied one-hot encoding to all of the features that did not have numerical values. This included: 'gender', 'signup_method', 'signup_flow', 'language', 'affiliate_channel', 'affiliate_provider', 'first_affiliate_tracked', 'signup_app', 'first_device_type', and 'first_browser'. 
+
+By the end of our data analysis, we ended up with 193 columns (not including id, which was later dropped since it is the index). With our new features, we were ready to begin developing models.
+
+
+## Methodology
+
+
+
+### Implementation
+
+We begin by splitting our training data set into training and testing subsets with a 80:20 ratio. We made sure to use the stratify option while splitting the data to ensure the data uses a representative set of the country destinations with similar proportions as the full data set. This is necessary because of the highly unbalanced distribution of the country destinations.
+
+We will use SVM and Decision Tree classifiers as our benchmarks, while showing how ensemble learning methods such as RandomForest and XGBoost will have better results.
+
+#### SVM Linear
+
+We first built a SVM Classifier model. SVM can be considered as one of the basic Machine Learning algorithms for supervised learning and is good to use hwen there is a clear margin of separation for the data. However, it is not recommended when we are dealing with a large data set because training time takes a while (training time is cubic in the size of the data set).
+
+
+#### Decision Tree
+
+Next, we built a decision tree classifier. Decision trees are powerful Machine Learning tools for multiclass classification problems, including the one we are working on. Their one drawback is that they are prone to overfitting when dealing with data that has lots of features. They are better suited as building blocks for ensemble methods, which we will see later. 
+
+#### Random Forest
+Ensemble methods use a group of "weak learners" and to create a "strong learner". For Random Forests, these weak learners are decision trees. A random percentage of the data is chosen T times, where T is the number of trees. After the data passes through the trees, the result is either averaged foras a mean prediction (regression) or as a class (classification). The advantage of Random Forests is that they operate with the bias of a single decision tree but decrease the variance, so they make up for the overfitting you would get with a decision tree. 
+
+#### XGBoost
+XGBoost is an ensemble learning method that utilizes gradient boosting with decision trees. Boosting is an ensemble technique where new models are added to correct errors made by existing models. In this case, the models are decision trees. Trees are added sequentiall until no further imrpovements can be made. XGBoost has high execution speed, strong model performance, and is the go-to algorithm for winners of Kaggle competitions
+
+
+
+
+
+
