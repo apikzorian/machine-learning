@@ -190,9 +190,3 @@ Ensemble methods use a group of "weak learners" and to create a "strong learner"
 
 #### XGBoost
 XGBoost is an ensemble learning method that utilizes gradient boosting with decision trees. Boosting is an ensemble technique where new models are added to correct errors made by existing models. In this case, the models are decision trees. Trees are added sequentiall until no further imrpovements can be made. XGBoost has high execution speed, strong model performance, and is the go-to algorithm for winners of Kaggle competitions
-
-
-
-
-
-
