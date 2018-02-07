@@ -176,17 +176,24 @@ We begin by splitting our training data set into training and testing subsets wi
 
 We will use SVM and Decision Tree classifiers as our benchmarks, while showing how ensemble learning methods such as RandomForest and XGBoost will have better results.
 
-#### SVM Linear
+### SVM Linear
 
 We first built a SVM Classifier model. SVM can be considered as one of the basic Machine Learning algorithms for supervised learning and is good to use hwen there is a clear margin of separation for the data. However, it is not recommended when we are dealing with a large data set because training time takes a while (training time is cubic in the size of the data set).
 
 
-#### Decision Tree
+### Decision Tree
 
 Next, we built a decision tree classifier. Decision trees are powerful Machine Learning tools for multiclass classification problems, including the one we are working on. Their one drawback is that they are prone to overfitting when dealing with data that has lots of features. They are better suited as building blocks for ensemble methods, which we will see later. 
 
-#### Random Forest
+### Random Forest
 Ensemble methods use a group of "weak learners" and to create a "strong learner". For Random Forests, these weak learners are decision trees. A random percentage of the data is chosen T times, where T is the number of trees. After the data passes through the trees, the result is either averaged foras a mean prediction (regression) or as a class (classification). The advantage of Random Forests is that they operate with the bias of a single decision tree but decrease the variance, so they make up for the overfitting you would get with a decision tree. 
 
 #### XGBoost
 XGBoost is an ensemble learning method that utilizes gradient boosting with decision trees. Boosting is an ensemble technique where new models are added to correct errors made by existing models. In this case, the models are decision trees. Trees are added sequentiall until no further imrpovements can be made. XGBoost has high execution speed, strong model performance, and is the go-to algorithm for winners of Kaggle competitions
+
+
+## Results
+
+Below is the nDCG scoring equation that we used to evaluate models
+
+### Logistic Regression
