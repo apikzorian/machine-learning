@@ -197,3 +197,14 @@ XGBoost is an ensemble learning method that utilizes gradient boosting with deci
 Below is the nDCG scoring equation that we used to evaluate models
 
 ### Logistic Regression
+Below is the confusion matrix for Logistic Regression. The model does a good job of predicting NDF, yet fails to predict other destinations with good accuracy. The model's accuracy is and its nDCG score is
+
+### Support Vector Machine
+We knew coming into this step that SVM Linear Classifiers would not be well suited for this problem, considering how poorly they perform on data with a large ammount of features. As we can see from the confusion matrix, the SVM does a poor job of predicting all the destinations, with an accuracy of 0.48. We can see that the decision boundaries are not linear and the SVM is not the appropriate model to use for our case.
+
+### Decision Tree
+The confusion matrix for the Decision Tree Classifier shows that it does a pretty good job of predicting NDF, yet similar to the Logistic Regressor, it is unable to predict other destinations very well. The accuracy of the model is 0.51. It registered an accuracy of *?* and a nDCG score of *?*
+
+### Random Forest
+Random Forest Classifier's confusion matrix shows that it was able to predict NDF and US destinations well, with low accuracy for other destinations. It registered an accuracy of *?* and a nDCG score of *?*
+
